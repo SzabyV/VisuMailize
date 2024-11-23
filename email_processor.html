@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Processor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        #drop-zone {
+            width: 100%;
+            min-height: 200px;
+            border: 3px dashed #ccc;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        #drop-zone.dragover {
+            border-color: #007bff;
+            background-color: #f8f9fa;
+        }
+
+        #file-list {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #f8f9fa;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+
+        .remove-file {
+            color: red;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+
+        #process-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        #process-button:hover {
+            background-color: #0056b3;
+        }
+
+        #process-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        #status {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <h1>Email Processor</h1>
+    <div id="drop-zone">
+        <p>Drag and drop .msg files here</p>
+        <p>or</p>
+        <input type="file" id="file-input" multiple accept=".msg" style="display: none;">
+        <button onclick="document.getElementById('file-input').click()">Select Files</button>
+    </div>
+
+    <div id="file-list"></div>
+
+    <button id="process-button" disabled>Process Emails</button>
+
+    <div id="status"></div>
+
+    <script>
+        const dropZone = document.getElementById('drop-zone');
+        const fileList = document.getElementById('file-list');
+        const processButton = document.getElementById('process-button');
+        const fileInput = document.getElementById('file-input');
+        const status = document.getElementById('status');
+        const files = new Set();
+
+        // Drag and drop handlers
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(fileList) {
+            for (const file of fileList) {
+                if (file.name.toLowerCase().endsWith('.msg')) {
+                    files.add(file);
+                }
+            }
+            updateFileList();
+            updateProcessButton();
+        }
+
+        function updateFileList() {
+            fileList.innerHTML = '';
+            files.forEach(file => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <span>${file.name}</span>
+                    <span class="remove-file" onclick="removeFile('${file.name}')">×</span>
+                `;
+                fileList.appendChild(fileItem);
+            });
+        }
+
+        function removeFile(fileName) {
+            files.forEach(file => {
+                if (file.name === fileName) {
+                    files.delete(file);
+                }
+            });
+            updateFileList();
+            updateProcessButton();
+        }
+
+        function updateProcessButton() {
+            processButton.disabled = files.size === 0;
+        }
+
+        processButton.addEventListener('click', async () => {
+            try {
+                processButton.disabled = true;
+                status.innerHTML = 'Processing...';
+                status.className = '';
+
+                const formData = new FormData();
+                files.forEach(file => {
+                    formData.append('files', file);
+                });
+
+                const response = await fetch('/process-emails', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) throw new Error('Processing failed');
+
+                status.innerHTML = 'Processing completed successfully!';
+                status.className = 'success';
+                files.clear();
+                updateFileList();
+                updateProcessButton();
+            } catch (error) {
+                status.innerHTML = `Error: ${error.message}`;
+                status.className = 'error';
+                processButton.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
