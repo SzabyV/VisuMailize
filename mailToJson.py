@@ -87,7 +87,7 @@ def extract_forwarded_emails(body):
 
 
 def parse_msg(filepath):
-    msg = extract_msg.Message(file_path)
+    msg = extract_msg.Message(filepath)
     msg_to = msg.to
     msg_sender = msg.sender
     msg_subject = msg.subject
@@ -125,6 +125,8 @@ def mails_to_json(email_chain, output_file):
     with open(output_file, "w", encoding="utf-8") as json_file:
         # Serialize the email chain as JSON and write it to the file
         json.dump(email_chain, json_file, ensure_ascii=False, indent=4, default=datetime_converter)
+    
+    return email_chain
 
 
 def parse_mail(file_path):
@@ -149,7 +151,10 @@ def parse_mail(file_path):
     mails.extend(fwd_mails)
 
     output = file_path.split('.')[0] + ".json"
-    mails_to_json(mails, output)
+    #mails_to_json(mails, output)
+    #return output
+    return mails
+    
 
 
 # file_path = "Structural Implications of Revised Ceiling Heights.msg"
