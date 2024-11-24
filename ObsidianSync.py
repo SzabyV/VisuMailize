@@ -128,7 +128,7 @@ def process_emails(emails):
     print("Starting email processing...")
     print(f"Number of emails: {len(emails[0])}")
     
-    VAULT_PATH = "./ObsidianVault"
+    VAULT_PATH = "./VisuMailize/ObsidianVault"
     print(f"Using vault path: {VAULT_PATH}")
     
     # Check if vault directory exists
@@ -143,7 +143,7 @@ def process_emails(emails):
 # Example usage
 #if __name__ == "__main__":
     # Replace with your Obsidian vault path and API key
-    VAULT_PATH = "ObsidianVault"
+    VAULT_PATH = "./VisuMailize/ObsidianVault"
     #API_KEY = os.getenv('OPENAI_API_KEY')
     
     obsidian = ObsidianNote(VAULT_PATH, API_KEY)

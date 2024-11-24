@@ -1,0 +1,210 @@
+{
+  "main": {
+    "id": "9a0c64ffc6c3fbaf",
+    "type": "split",
+    "children": [
+      {
+        "id": "8cfcc766cc585958",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5763de9897ad14f4",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          },
+          {
+            "id": "629f397d62b80b2f",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "1e8c896a12fe8bb1",
+    "type": "split",
+    "children": [
+      {
+        "id": "d1df97e6cfd56ffb",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7024304d6cf8e7f7",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "872c3a3bb62a6baf",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "5f19c20d70ba7e64",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "ec21b988f3f1b568",
+    "type": "split",
+    "children": [
+      {
+        "id": "9d87fae9ee52b33d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3c27981645836308",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Construction Notes/Review of Column Layout and Dimensions for TU Munich Cafeteria.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Review of Column Layout and Dimensions for TU Munich Cafeteria"
+            }
+          },
+          {
+            "id": "ec20455e01ec4654",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Construction Notes/Review of Column Layout and Dimensions for TU Munich Cafeteria.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Review of Column Layout and Dimensions for TU Munich Cafeteria"
+            }
+          },
+          {
+            "id": "a4e82a84befead7e",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "443ff0ad0be40d00",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Construction Notes/Review of Column Layout and Dimensions for TU Munich Cafeteria.md"
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Review of Column Layout and Dimensions for TU Munich Cafeteria"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "629f397d62b80b2f",
+  "lastOpenFiles": [
+    "Emails/Request for Preliminary Cost Estimate.md",
+    "Emails/Request for Preliminary Cost Estimate_1_2_1_1_1_1_1_1_1_1.md",
+    "Roles/Architect.md",
+    "Emails/Materials Compliance with Sustainability Goals_1_1_1_1_1_1_1.md",
+    "Emails/Wall Load Assessment for Partition Walls in Sample Project_1_2_3_4.md",
+    "Emails/Wall Load Assessment for Partition Walls in Sample Project_1_2_1.md",
+    "Emails/Wall Load Assessment for Partition Walls in Sample Project_1_1_1.md",
+    "Emails/MEP Coordination for HVAC Systems_1_1_1_1_1_1.md",
+    "Emails/Structural Implications of Revised Ceiling Heights_1_1_1_1_1_1_1_1.md",
+    "Emails/Feedback on Design and Structural Adjustments_1_1_1_1_1_1_1_1_1.md",
+    "Emails/Request for Preliminary Cost Estimate_1_2_1_1_1_1_1_1_1_1_1_1.md",
+    "Emails/Coordination of Installation Timelines_1_1_1_1_1_1_1_1_1_1_1_1.md",
+    "Emails/Materials Compliance with Sustainability Goals_1_1_1_1_1_1_1_1_1_1_1_1.md",
+    "Emails/Wall Load Assessment for Partition Walls in Sample Project_1_2_3.md",
+    "Emails/Wall Load Assessment for Partition Walls in Sample Project_1_1.md",
+    "Emails/MEP Coordination for HVAC Systems_1_1_1_1_1.md",
+    "Emails/Structural Implications of Revised Ceiling Heights_1_1_1_1_1_1_1.md",
+    "Emails/Feedback on Design and Structural Adjustments_1_1_1_1_1_1_1_1.md",
+    "Emails/Request for Preliminary Cost Estimate_1_2_1_1_1_1_1_1_1_1_1.md",
+    "Emails/Coordination of Installation Timelines_1_1_1_1_1_1_1_1_1_1_1.md",
+    "Emails/Materials Compliance with Sustainability Goals_1_1_1_1_1_1_1_1_1_1_1.md",
+    "Emails/Wall Load Assessment for Partition Walls in Sample Project_1_2.md",
+    "Emails/MEP Coordination for HVAC Systems_1_1_1_1.md",
+    "Emails/Structural Implications of Revised Ceiling Heights_1_1_1_1_1_1.md",
+    "Emails/Structural Implications of Revised Ceiling Heights_1_1_1_1_1.md",
+    "Emails/Feedback on Design and Structural Adjustments_1_1_1_1_1_1_1.md",
+    "Emails/Re",
+    "Emails/Meeting Follow-Up",
+    "Emails/AW",
+    "Subjects",
+    "Roles",
+    "Components",
+    "Construction Notes/Re",
+    "Construction Notes/AW",
+    "Emails"
+  ]
+}
