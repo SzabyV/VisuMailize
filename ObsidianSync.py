@@ -2,6 +2,13 @@ from dotenv import load_dotenv
 import os
 from datetime import datetime
 from openai import OpenAI
+import logging
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    filename='obsidian_sync.log'
+)
 
 load_dotenv()  # Load environment variables from .env file
 API_KEY = os.getenv('OPENAI_API_KEY')
@@ -24,7 +31,7 @@ class ObsidianNote:
 
     def chat_with_openai(self, prompt):
         client = OpenAI(
-            
+            api_key=self.api_key
         )
 
         chat_completion = client.chat.completions.create(
@@ -84,93 +91,197 @@ class ObsidianNote:
             filename = filename.replace(char, '')
         return filename.strip()
 
+    def read_note(self, title, folder=None):
+        """
+        Read the content of a note from the Obsidian vault
+        
+        Args:
+            title (str): Title of the note (without .md extension)
+            folder (str): Subfolder in the vault (optional)
+        
+        Returns:
+            str: Content of the note, or None if the note doesn't exist
+        """
+        # Base path is your Obsidian vault path
+        base_path = self.vault_path
+        
+        if folder:
+            # Create folder path correctly
+            folder_path = os.path.join(base_path, folder)
+        else:
+            folder_path = base_path
+        
+        # Get the full file path
+        note_path = os.path.join(folder_path, f"{title}.md")
+        
+        try:
+            with open(note_path, 'r', encoding='utf-8') as f:
+                return f.read()
+        except FileNotFoundError:
+            print(f"Note not found: {note_path}")
+            return None
+
 
 
 
 def process_emails(emails):
-
-
+    print("Starting email processing...")
+    print(f"Number of emails: {len(emails[0])}")
+    
+    VAULT_PATH = "./ObsidianVault"
+    print(f"Using vault path: {VAULT_PATH}")
+    
+    # Check if vault directory exists
+    if not os.path.exists(VAULT_PATH):
+        print(f"Creating vault directory: {VAULT_PATH}")
+        os.makedirs(VAULT_PATH)
+    
+    if not os.path.exists(os.path.join(VAULT_PATH, "Emails")):
+        print("Creating Emails subdirectory")
+        os.makedirs(os.path.join(VAULT_PATH, "Emails"))
 
 # Example usage
 #if __name__ == "__main__":
     # Replace with your Obsidian vault path and API key
-    VAULT_PATH = "./ObsidianVault"
+    VAULT_PATH = "ObsidianVault"
     #API_KEY = os.getenv('OPENAI_API_KEY')
     
     obsidian = ObsidianNote(VAULT_PATH, API_KEY)
 
-    for  email in emails[0]:
+    for  email_chain in emails:
+        for email in email_chain:
+            email_content = email
 
-        email_content = email
-
-        email_content2 = """From: Özlem Zeynep Atalar <ozlematalar@hotmail.com>
-    Date: Saturday, 23. November 2024 at 17:55
-    To: Szabolcs.Veress@aip-architects.de <Szabolcs.Veress@aip-architects.de>
-    Subject: Re: Wall Load Assessment for Partition Walls in Sample Project
-    Dear [Structural Engineer’s Name],
-    
-    Thank you for clarifying.
-    
-    A site visit sounds like an excellent idea. I’m available on [specific date and time], or let me know a time that works better for you.
-    
-    For now, we’ll proceed with the light steel framing and the 50kg/m² limit for shelving as you’ve suggested. Once we’ve reviewed the ceiling setup during the site visit, we can finalize the anchoring strategy.
-    
-    Thank you again for your support. Looking forward to your insights during the visit!
-    
-    Best regards,
-    [Your Name]
-    Architect
-    [Your Company Name]"""
+            email_content2 = """From: Özlem Zeynep Atalar <ozlematalar@hotmail.com>
+        Date: Saturday, 23. November 2024 at 17:55
+        To: Szabolcs.Veress@aip-architects.de <Szabolcs.Veress@aip-architects.de>
+        Subject: Re: Wall Load Assessment for Partition Walls in Sample Project
+        Dear [Structural Engineer’s Name],
         
-        # Example prompt to GPT
-        prompt = f"""Now you should extract keywords from the emails like what is the topic?, what is the receivers' role?, etc.
+        Thank you for clarifying.
+        
+        A site visit sounds like an excellent idea. I’m available on [specific date and time], or let me know a time that works better for you.
+        
+        For now, we’ll proceed with the light steel framing and the 50kg/m² limit for shelving as you’ve suggested. Once we’ve reviewed the ceiling setup during the site visit, we can finalize the anchoring strategy.
+        
+        Thank you again for your support. Looking forward to your insights during the visit!
+        
+        Best regards,
+        [Your Name]
+        Architect
+        [Your Company Name]"""
+            
+            # Example prompt to GPT
+            prompt = f"""Now you should extract keywords from the emails like what is the topic?, what is the receivers' role?, etc.
 
-    put only the relevant keywords inside double cornered brackets and only return the keywords in brackets like : [[Keyword]] because we need to use it to provide to API. please unformatted.
+        put only the relevant keywords inside double cornered brackets and only return the keywords in brackets like : [[Keyword]] because we need to use it to provide to API. please unformatted.
 
-    choose 1 or more components that I provide which is related to the mails:
+        choose 1 or more components that I provide which is related to the mails:
 
-    beam, column, door, furniture, signage, wall, window
+        beam, column, door, furniture, signage, wall, window
 
-    choose 1 or more roles that I provide which is related to the mails:
+        choose 1 or more roles that I provide which is related to the mails:
 
-    architect, bulding physics, interior design, structural engineer, TGA
+        architect, bulding physics, interior design, structural engineer, TGA
 
-    choose 1 subject that I provide which is related to the mails:
+        choose 1 subject that I provide which is related to the mails:
 
-    Facade, Fire Security, Load Assesment, Pollutants, Structural Problems
+        Facade, Fire Security, Load Assesment, Pollutants, Structural Problems
 
-    we are trying to visualize the emails :
+        we are trying to visualize the emails :
 
-    {email_content}
+        {email_content}
+
+        """
+            try:
+                # Get response from GPT
+                gpt_response = obsidian.chat_with_openai(prompt=prompt)
+
+                existing_obsidian_emails = os.listdir(os.path.join(VAULT_PATH, "Emails"))
+                if(existing_obsidian_emails):
+                    i=1
+                    for existing_email in existing_obsidian_emails:
+                        #path_to_existing_email = os.path.join(VAULT_PATH, "Emails", existing_email)
+                        existing_email_title = existing_email.replace(".md", "")
+                        existing_email_content = obsidian.read_note(existing_email_title,"Emails") # if email_title exists
+                        if email_content["subject"] in existing_email: # if email_title exsits and the body is not identical
+                            
+                            #print(existing_email)
+                            if email_content["body"] not in existing_email_content:
+                                #print("Email body is not identical")
+                                email_content["subject"] = email_content["subject"] + f"_{i}"
+                                i+=1
+                            else:
+                                if gpt_response:
+                                    # Create note with GPT's response
+                                    note_path = obsidian.create_note(
+                                        title=email_content["subject"],
+                                        content=email_content["body"] +
+                                        "\n"+
+                                        email_content["from"] +
+                                        "\n"+
+                                        email_content["to"]+
+                                        "\n"+
+                                        
+                                        gpt_response,
+                                        folder="Emails"
+                                    )
+                                    print(f"Note created at: {note_path}")
+                                else:
+                                    print("Failed to get response from GPT")
+                        else:
+                            if gpt_response:
+                                # Create note with GPT's response
+                                note_path = obsidian.create_note(
+                                    title=email_content["subject"],
+                                    content=email_content["body"] +
+                                    "\n"+
+                                    email_content["from"] +
+                                    "\n"+
+                                    email_content["to"]+
+                                    "\n"+
+                                    
+                                    gpt_response,
+                                    folder="Emails"
+                                )
+                                print(f"Note created at: {note_path}")
+                            else:
+                                print("Failed to get response from GPT")
+                else:
+                    if gpt_response:
+                        # Create note with GPT's response
+                        note_path = obsidian.create_note(
+                            title=email_content["subject"],
+                            content=email_content["body"] +
+                            "\n"+
+                            email_content["from"] +
+                            "\n"+
+                            email_content["to"]+
+                            "\n"+
+                            
+                            gpt_response,
+                            folder="Emails"
+                        )
+                        print(f"Note created at: {note_path}")
+                    else:
+                        print("Failed to get response from GPT")
+            except:
+                print("Error")
 
     """
-    
-        # Get response from GPT
-        gpt_response = obsidian.chat_with_openai(prompt=prompt)
-        
-        if gpt_response:
-            # Create note with GPT's response
-            note_path = obsidian.create_note(
-                title=email_content["subject"],
-                content=email_content["body"] +
-                "\n"+
-                gpt_response,
-                folder="Construction Notes"
-            )
-            print(f"Note created at: {note_path}")
-        else:
-            print("Failed to get response from GPT")
 
-"""
-
-                email_content["from"] +
-                "\n"+
-                email_content["date"]+
-                "\n"+
-                email_content["from"]+
-                "\n"+
                 email_content["to"]+
-                "\n"+
+                    "\n"+ 
+
+                    email_content["from"] +
+                                "\n"+
+                            email_content["date"]+
+                            "\n"+
+                            email_content["to"]+
+                            "\n"+
+                            email_content["date"]+
+                            "\n"+
+                
 """
 
 """

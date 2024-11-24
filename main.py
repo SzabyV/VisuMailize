@@ -4,6 +4,13 @@ from werkzeug.utils import secure_filename
 import mailToJson as mj
 import ObsidianSync as Obs_Sync
 import json
+import logging
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    filename='flask_app.log'
+)
 
 app = Flask(__name__)
 
@@ -20,27 +27,34 @@ def index():
 def process_emails():
     try:
         files = request.files.getlist('files')
-        all_mails = []  # Create a list to store all processed emails
+        logging.debug(f"Received files: {[f.filename for f in files]}")
+        
+        all_mails = []
         
         for file in files:
-            if file.filename.endswith(('.msg', '.eml')):  # Accept both .msg and .eml
+            if file.filename.endswith(('.msg', '.eml')):
                 filename = secure_filename(file.filename)
                 filepath = os.path.join(UPLOAD_FOLDER, filename)
                 file.save(filepath)
                 
-                # Process the email and add to our list
+                logging.debug(f"Processing file: {filename}")
                 mail_data = mj.parse_mail(filepath)
-                #mail_data_string  = json.load(mail_data)
+                logging.debug(f"Parsed mail data: {mail_data}")
+                
                 all_mails.append(mail_data)
                 
-                Obs_Sync.process_emails(all_mails)
+                try:
+                    Obs_Sync.process_emails(all_mails)
+                    logging.debug("Successfully processed email in ObsidianSync")
+                except Exception as e:
+                    logging.error(f"Error in ObsidianSync: {str(e)}")
+                    raise
                 
-                # Clean up
                 os.remove(filepath)
         
-        # Return the processed emails data to the frontend
         return {'message': 'Processing completed', 'emails': all_mails[0]}, 200
     except Exception as e:
+        logging.error(f"Error processing emails: {str(e)}")
         return {'error': str(e)}, 500
 
 if __name__ == '__main__':

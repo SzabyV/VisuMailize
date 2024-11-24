@@ -180,9 +180,9 @@
 <body>
     <h1>graphm<span class="highlight">ai</span>l</h1>
     <div id="drop-zone">
-        <p>drag and drop .msg files here</p>
+        <p>drag and drop .msg or .eml files here</p>
         <p>or</p>
-        <input type="file" id="file-input" multiple accept=".msg" style="display: none;">
+        <input type="file" id="file-input" multiple accept=".msg,.eml" style="display: none;">
         <button onclick="document.getElementById('file-input').click()">select files</button>
     </div>
 
@@ -290,7 +290,8 @@
                 updateFileList();
                 updateProcessButton();
             } catch (error) {
-                status.innerHTML = `Error: ${error.message}`;
+                console.error('Processing error:', error);
+                status.innerHTML = `Error: ${error.message}<br>Check console for more details`;
                 status.className = 'error';
                 processButton.disabled = false;
             }
