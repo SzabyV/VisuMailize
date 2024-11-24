@@ -222,7 +222,7 @@
 
         function handleFiles(fileList) {
             for (const file of fileList) {
-                if (file.name.toLowerCase().endsWith('.msg')) {
+                if (file.name.toLowerCase().endsWith('.msg') || file.name.toLowerCase().endsWith('.eml')) {
                     files.add(file);
                 }
             }
@@ -257,7 +257,7 @@
             processButton.disabled = files.size === 0;
         }
 
-        processButton.addEventListener('click', async () => {
+        processButton.addEventListener('click', async (e) => {
             try {
                 processButton.disabled = true;
                 status.innerHTML = 'Processing...';
@@ -274,9 +274,18 @@
                 });
 
                 if (!response.ok) throw new Error('Processing failed');
-
-                status.innerHTML = 'Processing completed successfully!';
+                
+                // Parse the JSON response
+                const result = await response.json();
+                
+                // Display the emails data
+                status.innerHTML = `
+                    <h3>Processing completed successfully!</h3>
+                    
+                `;
+                //<pre>${JSON.stringify(result.emails, null, 2)}</pre>
                 status.className = 'success';
+                
                 files.clear();
                 updateFileList();
                 updateProcessButton();
