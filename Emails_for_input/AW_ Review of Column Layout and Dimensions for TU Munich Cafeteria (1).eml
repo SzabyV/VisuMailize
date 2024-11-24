@@ -1,0 +1,494 @@
+Return-Path: <SRS0=4rGL=SS=outlook.com=voelkel.ludwig@srs.mail.lrz.de>
+Authentication-Results:  web.de; dkim=pass header.i=@outlook.com
+Received: from forwout2.mail.lrz.de ([129.187.255.131]) by mx-ha.web.de
+ (mxweb005 [212.227.15.17]) with ESMTPS (Nemesis) id 1MjyeK-1tzKps3uvI-00ZTNd
+ for <sebastian.saendig@web.de>; Sat, 23 Nov 2024 22:15:13 +0100
+Received: from postforw1.mail.lrz.de (lxmhs61.srv.lrz.de [IPv6:2001:4ca0:0:116::a9c:63d])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by forwout2.mail.lrz.de (Postfix) with ESMTPS id 4Xwl9X50YszYN
+	for <sebastian.saendig@web.de>; Sat, 23 Nov 2024 22:15:12 +0100 (CET)
+Received: from fwdsplit1.mail.lrz.de (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by postforw1.mail.lrz.de (Postfix) with ESMTPS id 4Xwl9X4f14zyRy
+	for <ge78hol@exchWL.mytum.de>; Sat, 23 Nov 2024 22:15:12 +0100 (CET)
+X-LRZ-Delivered-To: ge78hol@exchwl.mytum.de
+Received: from postforw1.mail.lrz.de (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by fwdsplit1.mail.lrz.de (Postfix) with ESMTPS id 4Xwl9X3rspzySJ
+	for <sebastian.saendig@tum.de>; Sat, 23 Nov 2024 22:15:12 +0100 (CET)
+Received: from postrelay2b.lrz.de (lxmhs90.srv.lrz.de [IPv6:2001:4ca0:0:116::a9c:65a])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by postforw1.mail.lrz.de (Postfix) with ESMTPS id 4Xwl9X3MDjzyRy
+	for <sebastian.saendig@tum.de>; Sat, 23 Nov 2024 22:15:12 +0100 (CET)
+Received: from lxmhs90.srv.lrz.de (localhost [127.0.0.1])
+	by postrelay2b.lrz.de (Postfix) with ESMTP id 4Xwl9X38ynzyPV
+	for <sebastian.saendig@tum.de>; Sat, 23 Nov 2024 22:15:12 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at lrz.de in lxmhs90.srv.lrz.de
+X-Spam-Flag: NO
+X-Spam-Score: 0.64
+X-Spam-Level:
+X-Spam-Status: No, score=0.64 tagged_above=-999 required=5
+	tests=[BAYES_50=0.8, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, DMARC_ADKIM_RELAXED=0.001,
+	DMARC_ASPF_RELAXED=0.001, DMARC_PASS_NONE=0.001,
+	DMARC_POLICY_NONE=0.001, DNSWL_DWL_BLOCKED=-0.001,
+	FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001, LRZ_BND_U_3N_U_AN55_U=0.001,
+	LRZ_DATE_TZ_0000=0.001, LRZ_DKIM_DESTROY_MTA=0.001,
+	LRZ_DMARC_OVERWRITE=0.001, LRZ_DMARC_PASS=0.001,
+	LRZ_DMARC_POLICY=0.001, LRZ_ENVFROM_FROM_MATCH=0.001,
+	LRZ_FROM_DKIM_ALIGNED_STRICT=0.001,
+	LRZ_FROM_ENVFROM_ALIGNED_STRICT=0.001, LRZ_FROM_FREEMAIL=0.001,
+	LRZ_FROM_HAS_A=0.001, LRZ_FROM_HAS_MDOM=0.001, LRZ_FROM_HAS_MX=0.001,
+	LRZ_FROM_HELO_ALIGNED_RELAXED=0.001, LRZ_FROM_NAME_IN_ADDR=0.001,
+	LRZ_FROM_OUTLOOK_COM=0.001, LRZ_FROM_PHRASE=0.001,
+	LRZ_FWD_MS_EX=0.001, LRZ_HAS_BND=0.001, LRZ_HAS_CLANG=0.001,
+	LRZ_HAS_CT=0.001, LRZ_HAS_IN_REPLY_TO=0.001,
+	LRZ_HAS_MIME_VERSION=0.001, LRZ_HAS_SPF=0.001,
+	LRZ_HAS_THREAD_INDEX=0.001, LRZ_MSGID_CLIENT_MISSING=0.001,
+	LRZ_MSGID_FROM_MTA=0.001, LRZ_MSGID_MS_O365=0.001,
+	LRZ_MSGID_OUTLOOK_COM=0.001, LRZ_NO_UA_HEADER=0.001,
+	LRZ_RCVD_FIRST_NO_AUTH=0.001, LRZ_RCVD_FIRST_NO_MSA=0.001,
+	LRZ_RCVD_FIRST_NO_RDNS=0.001, LRZ_RCVD_MS_EX=0.001,
+	LRZ_SUBJ_FW_RE=0.001, SPF_HELO_PASS=0.001, SPF_PASS=-0.001]
+	autolearn=no autolearn_force=no
+X-Spam-ASN:  
+Received: from postrelay2b.lrz.de ([127.0.0.1])
+	by lxmhs90.srv.lrz.de (lxmhs90.srv.lrz.de [127.0.0.1]) (amavisd-new, port 10001)
+	with ESMTP id wHiQZwp0yaAK for <sebastian.saendig@tum.de>;
+	Sat, 23 Nov 2024 22:15:11 +0100 (CET)
+Received: from EUR05-DB8-obe.outbound.protection.outlook.com (mail-db8eur05olkn20828.outbound.protection.outlook.com [IPv6:2a01:111:f403:2e14::828])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-384) server-signature RSA-PSS (2048 bits) server-digest SHA256
+	 client-signature RSA-PSS (2048 bits) client-digest SHA256)
+	(Client CN "mail.protection.outlook.com", Issuer "DigiCert Cloud Services CA-1" (verified OK))
+	by postrelay2b.lrz.de (Postfix) with ESMTPS
+	for <sebastian.saendig@tum.de>; Sat, 23 Nov 2024 22:15:11 +0100 (CET)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=RtUimNK5X28L0Stzxxo5wu4lv+8SgIjz0E7ictPSMCHSxo9W4y9rGe5tXLCI5oUcGsolcQpiNyhW/UaimOgWMCQXD/T/Y4CaKyC6/1CuiNmm85BK26YvYB9zf9/JelZzrsKRGdiGkoTwboWxwZOqw+oO/KoQW9Z+9mrpTN4Ny+DKivcuWGh55HEEO5BOsyiLdUENtg6vZMj91lFft16hUQHyMCkQ5gfiClEmkeJ89lgRUmAS2XbUMrRbQ5Yng2rtXD2PgLxkGYgCfTfaebzyFI+iencLlGXBaZ4YPhiuvgZDpC6hYSJo3tc4RBjTzeAAhkFjbqGOYOA6GCtXja2hFA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=acrzV2+PfzjiFOLiyKycStI6tfkcQs0csYMUBeL+j0Y=;
+ b=kv80/v7f/LysLYoRiao6KE7AHavu1PHt3Dx8iVdfi3sWZGf2TPFmvUU8JFJb4Mm2zBSIeephR+IiYpU3x6XBO8pgsIkeqt8Bwaz21d/z24VYZQzeXJxqbN09CgAV9Km5SOJ5+62OfXLWJwEHZgxB4kqQ56/Q0e6nY9KFKP+ruQ1dcNkTeCIBxrNtXrcMrUv8mT/cpAn+SkNBzSM4LNJBulP1++l7NoW47uFEbzSwe+JTZl1Ux4otB5Buo68i9ZoGYi+X/FUOv9wN9U96MYNogiYNxA7ddR6uAi6OEVdaID6/XsFqQJ6V/2b0h0QGjO2pQ6mA4KbwW3OYWbWsMZXBZw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=acrzV2+PfzjiFOLiyKycStI6tfkcQs0csYMUBeL+j0Y=;
+ b=bJOFqzaFO/GaMrBtjE1MVO2cKY4JNuIg4T5XxxnJTNSJW40n4wNNWGquxXX/JTURN+xWil0scZLHHoAIwIxUYKoswg7TNOPcbGbNmOCHVN2ItIZqpC0eLMgGz6LZQzHEJnTnX1oFfsG/Z8OvyKZx/wqNPSBk44OuLggDt7IL7I/ay4k0Fqt2BN7yMrVrq0QSOxATd1SCkbxKwfS3TNIXoFvJu5iXHs7AIJtdm3bhBu6cWDf7qVzHg0syU4OW93pxWcH1v/hy79544GyxoidFEU+21a+pFUmD86o/SC5wwcHo9tWP3jO3uUe9xzOncSMPAjQ5OnRt02i6IuCY9JwYLA==
+Received: from VI0P193MB2617.EURP193.PROD.OUTLOOK.COM (2603:10a6:800:258::7)
+ by AM9P193MB1331.EURP193.PROD.OUTLOOK.COM (2603:10a6:20b:30e::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8182.18; Sat, 23 Nov
+ 2024 21:15:03 +0000
+Received: from VI0P193MB2617.EURP193.PROD.OUTLOOK.COM
+ ([fe80::b4c3:9084:21e8:e0b1]) by VI0P193MB2617.EURP193.PROD.OUTLOOK.COM
+ ([fe80::b4c3:9084:21e8:e0b1%4]) with mapi id 15.20.8158.024; Sat, 23 Nov 2024
+ 21:15:03 +0000
+From: =?Windows-1252?Q?Ludwig_V=F6lkel?= <voelkel.ludwig@outlook.com>
+To: =?Windows-1252?Q?Sebastian_S=E4ndig?= <sebastian.saendig@tum.de>
+Subject: AW: Review of Column Layout and Dimensions for TU Munich Cafeteria
+Thread-Topic: Review of Column Layout and Dimensions for TU Munich Cafeteria
+Thread-Index: AQHbPeqhLHLgMDzVp0CBeqewfbzh17LFWe6WgAAAVfGAAAK7Sw==
+Date: Sat, 23 Nov 2024 21:15:03 +0000
+Message-ID:
+ <VI0P193MB261725CB7F31246B852471E4842C2@VI0P193MB2617.EURP193.PROD.OUTLOOK.COM>
+References:
+ <01011121734b4881976efd35bc6f76bc@tum.de>,<VI0P193MB26177500348E451360E604A7842C2@VI0P193MB2617.EURP193.PROD.OUTLOOK.COM>
+ <569aa3ec4a3a41af8eca5c7f3192a278@tum.de>
+In-Reply-To: <569aa3ec4a3a41af8eca5c7f3192a278@tum.de>
+Accept-Language: de-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: VI0P193MB2617:EE_|AM9P193MB1331:EE_
+x-ms-office365-filtering-correlation-id: b2dcc3ed-3faf-4beb-b5fd-08dd0c03e5e8
+x-microsoft-antispam:
+ BCL:0;ARA:14566002|461199028|19110799003|7092599003|15030799003|8060799006|15080799006|8062599003|102099032|3430499032|440099028|3412199025;
+x-microsoft-antispam-message-info:
+ =?Windows-1252?Q?6uwyHup2iAN0oUpOabYdFDPezWqfCRMkP01DCzqCzCCnIpGmmKAPhEeU?=
+ =?Windows-1252?Q?LmnZ6AdJPZ5QwcJqZKUDn+Ld8mYoOAwG7IzGhVRDNqe3dCytCpgavZN0?=
+ =?Windows-1252?Q?mQRvtnzUDCSjZDI8+AAVrr/TddF6dWv2joRv5f4mdnYp06LMxfZMSFZP?=
+ =?Windows-1252?Q?WaI8PxKDtH5oOQWJsbnMJvpQDXbfv3QiAwvGKXlQjalLVi1WU+329hM0?=
+ =?Windows-1252?Q?X013f3bjtzoHGntieSBhsvTeOnHlzETSfSlQ4wSbZA9MwkPUADd20Edi?=
+ =?Windows-1252?Q?+03W2Imv+X7zWoyi7WjRRxn+quPMBY3kHd+hnuhRDXh0tGbGlu3BAhIu?=
+ =?Windows-1252?Q?tPKZpzryP/DN44vfB0nPMe8CRBiydHr1dgK5yVlaVnZqjAWoGfZzt2gy?=
+ =?Windows-1252?Q?0o7A15HyHn4n7CT1RyeEYfvci5QPBJxP1/vipqP5cZA7w/MTVUMwkg1x?=
+ =?Windows-1252?Q?W9WOfs18TD+SrurMTHMaNPzzVrAcTbFX5lbmeVLGh8lgCKKcJgZtjvIE?=
+ =?Windows-1252?Q?VpW6uN8NFjOqAU/B41n3mkFouF/I7KkBn4PHpE834y9wf+KIWrFN4T/R?=
+ =?Windows-1252?Q?bAmb51vh7S49tsBhaGv1AeCsvc2/3356gYewtu3hCU5vpmFT6apSufmV?=
+ =?Windows-1252?Q?9Rlx0Wy9QtT0FseLO2ljsP/E5u2azcT0yt0FXD7UPQBARQNWQHPOIr2j?=
+ =?Windows-1252?Q?/xKvozHMww4CCoKqsjS705Pen5Q6JSPKsC7xhfrjtJsLs+TQzVVImogF?=
+ =?Windows-1252?Q?i4P56+I06y0HnCiMF7cSfq1wNaB8Qx/z6Bzt6b4/dbUwkZa2vljaHzF0?=
+ =?Windows-1252?Q?pMwgFU93zZw4aTECaUfzSHhRxxml8t6+VaffYoT3iWycRvOva6/AuGEL?=
+ =?Windows-1252?Q?HId1zcwy9S81No3x6ms1Uln9CMS4y2XlGkm9Aeu/vQJmuWJTtxhj4kuu?=
+ =?Windows-1252?Q?tJwusEz6oY9Ei/o1YhZFNgvC0IB0H2l0iJlQnB0nHh1A2fbcyFagGF6T?=
+ =?Windows-1252?Q?bbneusiUYZuNbU08H4jdRpu88Vn3Xv1pHzfbJH9uqVH5SJjaxQygh/7Y?=
+ =?Windows-1252?Q?ec7NB3T3+b/o56prgQOuo8ETVnrvqGRQMN15osm5FIiUerBw5Iom4KYb?=
+ =?Windows-1252?Q?P56Vh+2kFlR8cYP8EcNQVauv?=
+Content-Type: multipart/alternative;
+	boundary="_000_VI0P193MB261725CB7F31246B852471E4842C2VI0P193MB2617EURP_"
+MIME-Version: 1.0
+X-OriginatorOrg: outlook.com
+Envelope-To: <sebastian.saendig@web.de>
+UI-InboundReport: unknown:5;M01:P0:ybctpF+BHYM=;398d5OA8gVPgLiqR+Sy2DlyQO5Yk
+ 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
+ AU1FlTgCAwMly+wB6KRs
+
+--_000_VI0P193MB261725CB7F31246B852471E4842C2VI0P193MB2617EURP_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+Dear Mr. Saendig,
+Thank you for promptly revising the column dimensions and layout. I have re=
+viewed the updated design and can confirm that the proposed beam dimensions=
+ are suitable for spanning the larger distances between the adjusted column=
+s.
+Moving forward, I will begin detailed calculations and design for the beam =
+joints to ensure they meet the required structural and safety standards. On=
+ce I have preliminary results, I will share them with you for alignment.
+Please don=92t hesitate to let me know if there are additional aspects of t=
+he design that require my input.
+Best regards,
+Ludwig Voelkel
+Structural Engineer
+________________________________
+From: Sebastian S=E4ndig <sebastian.saendig@tum.de>
+Date: Samstag, 23. November 2024 22:03
+To: Ludwig V=F6lkel <voelkel.ludwig@outlook.com>
+Subject: AW: Review of Column Layout and Dimensions for TU Munich Cafeteria
+
+Dear Mr. Voelkel,
+
+Thank you for your detailed feedback regarding the column dimensions. I hav=
+e updated the design to increase the column diameters by 10 cm, as per your=
+ calculations, and adjusted the layout accordingly. Please find the revised=
+ drawings attached for your review.
+
+In addition, I would appreciate your input on the proposed beam dimensions =
+in the updated design, particularly their suitability to span the larger di=
+stances between the adjusted columns. Please let me know if they require mo=
+difications to ensure structural stability.
+
+I look forward to your feedback and thank you for your continued support.
+
+Best regards,
+Sebastian Saendig
+Architect
+________________________________
+From: Ludwig V=F6lkel <voelkel.ludwig@outlook.com>
+Date: Samstag, 23. November 2024 22:02:26
+To: Sebastian S=E4ndig
+Subject: AW: Review of Column Layout and Dimensions for TU Munich Cafeteria
+
+Dear Mr. Saendig,
+Thank you for sharing the column layout and dimensions for the new cafeteri=
+a at TU Munich. I have conducted the necessary calculations, and it appears=
+ that the current column dimensions need to be adjusted. To ensure adequate=
+ load-bearing capacity, the column diameters must be increased by 10 cm.
+I recommend updating the design to reflect this adjustment and revising the=
+ layout as needed to accommodate the change. Once the updated plans are rea=
+dy, I will be happy to review them again to confirm compliance with the str=
+uctural requirements.
+Please feel free to reach out if you have any questions or require further =
+clarification.
+Best regards,
+Ludwig Voelkel
+Structural Engineer
+________________________________
+From: Sebastian S=E4ndig <sebastian.saendig@tum.de>
+Date: Samstag, 23. November 2024 22:00
+To: voelkel.ludwig@outlook.com <voelkel.ludwig@outlook.com>
+Subject: Review of Column Layout and Dimensions for TU Munich Cafeteria
+
+Dear Mr. Voelkel,
+
+I hope this message finds you well.
+
+As part of the ongoing planning for the new cafeteria at TU Munich, I have =
+finalized the proposed column layout and dimensions. I would greatly apprec=
+iate it if you could review the attached drawings to ensure that the dimens=
+ions align with the structural requirements.
+
+In particular, I would like your expert opinion on:
+
+The adequacy of the column sizes to support the intended loads.
+Any adjustments or recommendations to enhance structural integrity and feas=
+ibility.
+Please let me know if additional information is needed or if a meeting woul=
+d be beneficial to discuss this further.
+
+Thank you in advance for your guidance and support. I look forward to your =
+feedback.
+
+Best regards,
+Sebastian Saendig
+Architect
+
+
+--_000_VI0P193MB261725CB7F31246B852471E4842C2VI0P193MB2617EURP_
+Content-Type: text/html; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
+252">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div class=3D"elementToProof" style=3D"text-align: left; text-indent: 0px; =
+background-color: rgb(255, 255, 255); margin: 1em 0px; font-family: Calibri=
+, Helvetica, sans-serif; font-size: 12pt; color: black;">
+Dear Mr. Saendig,</div>
+<div style=3D"text-align: left; text-indent: 0px; background-color: rgb(255=
+, 255, 255); margin: 1em 0px; font-family: Calibri, Helvetica, sans-serif; =
+font-size: 12pt; color: black;">
+Thank you for promptly revising the column dimensions and layout. I have re=
+viewed the updated design and can confirm that the proposed beam dimensions=
+ are suitable for spanning the larger distances between the adjusted column=
+s.</div>
+<div style=3D"text-align: left; text-indent: 0px; background-color: rgb(255=
+, 255, 255); margin: 1em 0px; font-family: Calibri, Helvetica, sans-serif; =
+font-size: 12pt; color: black;">
+Moving forward, I will begin detailed calculations and design for the beam =
+joints to ensure they meet the required structural and safety standards. On=
+ce I have preliminary results, I will share them with you for alignment.</d=
+iv>
+<div style=3D"text-align: left; text-indent: 0px; background-color: rgb(255=
+, 255, 255); margin: 1em 0px; font-family: Calibri, Helvetica, sans-serif; =
+font-size: 12pt; color: black;">
+Please don=92t hesitate to let me know if there are additional aspects of t=
+he design that require my input.</div>
+<div class=3D"elementToProof" style=3D"text-align: left; text-indent: 0px; =
+background-color: rgb(255, 255, 255); margin: 1em 0px; font-family: Calibri=
+, Helvetica, sans-serif; font-size: 12pt; color: black;">
+Best regards,<br>
+Ludwig Voelkel<br>
+Structural Engineer</div>
+<hr style=3D"display: inline-block; width: 98%;">
+<div id=3D"divRplyFwdMsg" dir=3D"ltr" style=3D"color: inherit;">
+<div class=3D"elementToProof" style=3D"font-family: Calibri, sans-serif; fo=
+nt-size: 11pt; color: rgb(0, 0, 0);">
+<b>From:</b>&nbsp;Sebastian S=E4ndig &lt;sebastian.saendig@tum.de&gt;</div>
+<div class=3D"elementToProof" style=3D"font-family: Calibri, sans-serif; fo=
+nt-size: 11pt; color: rgb(0, 0, 0);">
+<b>Date:</b>&nbsp;Samstag, 23. November 2024 22:03</div>
+<div class=3D"elementToProof" style=3D"font-family: Calibri, sans-serif; fo=
+nt-size: 11pt; color: rgb(0, 0, 0);">
+<b>To:</b>&nbsp;Ludwig V=F6lkel &lt;voelkel.ludwig@outlook.com&gt;</div>
+<div class=3D"elementToProof" style=3D"font-family: Calibri, sans-serif; fo=
+nt-size: 11pt; color: rgb(0, 0, 0);">
+<b>Subject:</b>&nbsp;AW: Review of Column Layout and Dimensions for TU Muni=
+ch Cafeteria</div>
+<div>&nbsp;</div>
+</div>
+<div id=3D"x_divtagdefaultwrapper" dir=3D"ltr" style=3D"font-size: 12pt; co=
+lor: rgb(0, 0, 0); font-family: Calibri, Helvetica, sans-serif;">
+<div>Dear Mr. Voelkel,<br>
+<br>
+Thank you for your detailed feedback regarding the column dimensions. I hav=
+e updated the design to increase the column diameters by 10 cm, as per your=
+ calculations, and adjusted the layout accordingly. Please find the revised=
+ drawings attached for your review.<br>
+<br>
+In addition, I would appreciate your input on the proposed beam dimensions =
+in the updated design, particularly their suitability to span the larger di=
+stances between the adjusted columns. Please let me know if they require mo=
+difications to ensure structural
+ stability.<br>
+<br>
+I look forward to your feedback and thank you for your continued support.<b=
+r>
+<br>
+Best regards,<br>
+Sebastian&nbsp;Saendig</div>
+Architect<br>
+</div>
+<hr style=3D"direction: ltr; display: inline-block; width: 98%;">
+<div id=3D"x_divRplyFwdMsg" dir=3D"ltr" style=3D"color: inherit;">
+<div class=3D"elementToProof" style=3D"font-family: Calibri, sans-serif; fo=
+nt-size: 11pt; color: rgb(0, 0, 0);">
+<b>From:</b>&nbsp;Ludwig V=F6lkel &lt;voelkel.ludwig@outlook.com&gt;</div>
+<div class=3D"elementToProof" style=3D"font-family: Calibri, sans-serif; fo=
+nt-size: 11pt; color: rgb(0, 0, 0);">
+<b>Date:</b>&nbsp;Samstag, 23. November 2024 22:02:26</div>
+<div class=3D"elementToProof" style=3D"font-family: Calibri, sans-serif; fo=
+nt-size: 11pt; color: rgb(0, 0, 0);">
+<b>To:</b>&nbsp;Sebastian S=E4ndig</div>
+<div class=3D"elementToProof" style=3D"font-family: Calibri, sans-serif; fo=
+nt-size: 11pt; color: rgb(0, 0, 0);">
+<b>Subject:</b>&nbsp;AW: Review of Column Layout and Dimensions for TU Muni=
+ch Cafeteria</div>
+<div>&nbsp;</div>
+</div>
+<div style=3D"direction: ltr; margin-top: 1em; margin-bottom: 1em; font-fam=
+ily: Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);"=
+>
+Dear Mr. Saendig,</div>
+<div style=3D"direction: ltr; margin-top: 1em; margin-bottom: 1em; font-fam=
+ily: Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);"=
+>
+Thank you for sharing the column layout and dimensions for the new cafeteri=
+a at TU Munich. I have conducted the necessary calculations, and it appears=
+ that the current column dimensions need to be adjusted. To ensure adequate=
+ load-bearing capacity, the column
+ diameters must be increased by 10 cm.</div>
+<div style=3D"direction: ltr; margin-top: 1em; margin-bottom: 1em; font-fam=
+ily: Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);"=
+>
+I recommend updating the design to reflect this adjustment and revising the=
+ layout as needed to accommodate the change. Once the updated plans are rea=
+dy, I will be happy to review them again to confirm compliance with the str=
+uctural requirements.</div>
+<div style=3D"direction: ltr; margin-top: 1em; margin-bottom: 1em; font-fam=
+ily: Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);"=
+>
+Please feel free to reach out if you have any questions or require further =
+clarification.</div>
+<div style=3D"direction: ltr; margin-top: 1em; margin-bottom: 1em; font-fam=
+ily: Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);"=
+>
+Best regards,<br>
+Ludwig Voelkel<br>
+Structural Engineer</div>
+<hr style=3D"direction: ltr; display: inline-block; width: 98%;">
+<div id=3D"x_divRplyFwdMsg" dir=3D"ltr" style=3D"color: inherit;">
+<div class=3D"elementToProof" style=3D"font-family: Calibri, sans-serif; fo=
+nt-size: 11pt; color: rgb(0, 0, 0);">
+<b>From:</b>&nbsp;Sebastian S=E4ndig &lt;sebastian.saendig@tum.de&gt;</div>
+<div class=3D"elementToProof" style=3D"font-family: Calibri, sans-serif; fo=
+nt-size: 11pt; color: rgb(0, 0, 0);">
+<b>Date:</b>&nbsp;Samstag, 23. November 2024 22:00</div>
+<div class=3D"elementToProof" style=3D"font-family: Calibri, sans-serif; fo=
+nt-size: 11pt; color: rgb(0, 0, 0);">
+<b>To:</b>&nbsp;voelkel.ludwig@outlook.com &lt;voelkel.ludwig@outlook.com&g=
+t;</div>
+<div class=3D"elementToProof" style=3D"font-family: Calibri, sans-serif; fo=
+nt-size: 11pt; color: rgb(0, 0, 0);">
+<b>Subject:</b>&nbsp;Review of Column Layout and Dimensions for TU Munich C=
+afeteria</div>
+<div>&nbsp;</div>
+</div>
+<div id=3D"x_x_divtagdefaultwrapper" dir=3D"ltr" style=3D"font-size: 12pt; =
+color: rgb(0, 0, 0); font-family: Calibri, Helvetica, sans-serif;">
+<div>Dear Mr. Voelkel,<br>
+<br>
+I hope this message finds you well.<br>
+<br>
+As part of the ongoing planning for the new cafeteria at TU Munich, I have =
+finalized the proposed column layout and dimensions. I would greatly apprec=
+iate it if you could review the attached drawings to ensure that the dimens=
+ions align with the structural requirements.<br>
+<br>
+In particular, I would like your expert opinion on:<br>
+<br>
+The adequacy of the column sizes to support the intended loads.<br>
+Any adjustments or recommendations to enhance structural integrity and feas=
+ibility.<br>
+Please let me know if additional information is needed or if a meeting woul=
+d be beneficial to discuss this further.<br>
+<br>
+Thank you in advance for your guidance and support. I look forward to your =
+feedback.<br>
+<br>
+Best regards,<br>
+Sebastian&nbsp;Saendig</div>
+<div>Architect</div>
+<br>
+</div>
+</body>
+</html>
+
+--_000_VI0P193MB261725CB7F31246B852471E4842C2VI0P193MB2617EURP_--
