@@ -1,0 +1,54 @@
+{
+  "participants": [
+    {
+      "email": "sebastian.saendig@tum.de",
+      "role": "Architect"
+    },
+    {
+      "email": "voelkel.ludwig@outlook.com",
+      "role": "Structural Engineer"
+    }
+  ],
+  "tasks": [
+    {
+      "title": "Review column layout and dimensions",
+      "description": "Review the proposed column layout and dimensions for the new cafeteria at TU Munich to ensure they align with structural requirements.",
+      "assignee_email": "voelkel.ludwig@outlook.com"
+    },
+    {
+      "title": "Increase column diameters",
+      "description": "Update the design to increase the column diameters by 10 cm as per the structural engineer's calculations.",
+      "assignee_email": "sebastian.saendig@tum.de"
+    },
+    {
+      "title": "Adjust layout for increased column diameters",
+      "description": "Adjust the column layout to accommodate the increased column diameters.",
+      "assignee_email": "sebastian.saendig@tum.de"
+    },
+    {
+      "title": "Review updated column layout and dimensions",
+      "description": "Review the revised drawings with updated column diameters and adjusted layout.",
+      "assignee_email": "voelkel.ludwig@outlook.com"
+    },
+    {
+      "title": "Review proposed beam dimensions",
+      "description": "Review the proposed beam dimensions in the updated design to ensure their suitability for spanning the larger distances between the adjusted columns.",
+      "assignee_email": "voelkel.ludwig@outlook.com"
+    },
+    {
+      "title": "Perform detailed calculations and design for beam joints",
+      "description": "Begin detailed calculations and design for the beam joints to ensure they meet the required structural and safety standards.",
+      "assignee_email": "voelkel.ludwig@outlook.com"
+    },
+    {
+      "title": "Share preliminary results for beam joint design",
+      "description": "Share the preliminary results of the detailed calculations and design for the beam joints with the architect for alignment.",
+      "assignee_email": "voelkel.ludwig@outlook.com"
+    },
+    {
+      "title": "Coordinate further design input",
+      "description": "Coordinate with the architect if there are additional aspects of the design that require the structural engineer's input.",
+      "assignee_email": "voelkel.ludwig@outlook.com"
+    }
+  ]
+}
